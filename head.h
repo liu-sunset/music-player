@@ -7,16 +7,10 @@
 #include<mmsystem.h>
 #include<assert.h>
 
-struct dirent {
-	ino_t          d_ino;       // inode number
-	off_t          d_off;       // offset to the next dirent
-	unsigned short d_reclen;    // length of this record
-	unsigned char  d_type;      // type of file
-	char           d_name[256]; // filename (null-terminated)
-};
+
 
 #pragma comment(lib,"winmm.lib")
-#define summusic 7//音乐总数
+#define summusic sum//音乐总数
 
 char arr[20][20];//存放开启音乐的字符串
 char arry[20][20];//存放关闭音乐的字符串
@@ -26,4 +20,4 @@ int save ;//关闭那一首音乐
 void menu();//菜单
 void playmusic();//播放音乐
 void printfthink();//爱心打印
-void loadmusic(char* directory);//加载音乐文件
+int listFiles(const char* dirPath, const char* extension);//检查文件夹下MP3文件个数

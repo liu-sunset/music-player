@@ -55,23 +55,32 @@ void printfthink()
 	printf("\t    意见邮箱：liulooklandscape@outlook.com\n");
 }
 
+int listFiles(const char* dirPath, const char* extension) 
+{
+	char searchPath[MAX_PATH];
+	WIN32_FIND_DATA findData;
+	HANDLE hFind;
 
+	// 构建搜索路径
+	snprintf(searchPath, MAX_PATH, "%s\\*.%s", dirPath, extension);
 
-//void loadmusic(char* directory)
-//{
-//	assert(directory);
-//	DIR* dir;
-//	struct dirent* ent;
-//	if ((dir = opendir(directory)) != NULL) {
-//		while ((ent = readdir(dir)) != NULL) {
-//			if (strstr(ent->d_name, ".mp3") || strstr(ent->d_name, ".wav")) {
-//				printf("Found music file: %s/%s\n", directory, ent->d_name);
-//			}
-//		}
-//		closedir(dir);
-//	}
-//	else {
-//		perror("Could not open directory");
-//	}
-//	
-//}
+	// 开始搜索
+	hFind = FindFirstFile(searchPath, &findData);
+	if (hFind == INVALID_HANDLE_VALUE) {
+		printf("No %s files found in directory: %s\n", extension, dirPath);
+		return;
+	}
+
+	// 遍历找到的文件
+	int count = 0;
+	do {
+		if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+			count++;
+		}
+	} while (FindNextFile(hFind, &findData) != 0);
+
+	// 关闭搜索句柄
+	FindClose(hFind);
+	return count;
+}
+
