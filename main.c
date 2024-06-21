@@ -2,21 +2,22 @@
 #include"head.h"
 extern int flag ;
 extern int save ;
-
+extern int sum;
 
 int main()
 {
 	const char* directory = "D:\\c源代码\\code_vs\\play_music"; // 替换为实际目录路径
 	const char* extension = "mp3"; // 指定扩展名
-	int sum=0;
+	sum = 0;
 		sum = listFiles(directory, extension);//mp3文件个数
 		if (sum == 0)
 		{
 			printf("抱歉，目前还没有内接MP3文件\n");
 			printfthink();
-	}
+	    }
 		else
 		{
+			
 			flag = 0;
 			save = 0;
 			int i = 0;
@@ -32,6 +33,7 @@ int main()
 			int n;
 			do
 			{
+				printf("\t\t共计%d首歌\n", sum);
 				menu();
 				printf("请选择->");
 				scanf("%d", &n);

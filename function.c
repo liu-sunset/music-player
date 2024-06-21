@@ -19,20 +19,37 @@ void menu()
 void playmusic()
 {
 	int n;
-	printf("ÇëÑ¡ÔñÒôÀÖ->");
-	scanf("%d", &n);
-	if (flag == 0)
+	while (1)
 	{
-		mciSendStringA(arr[n-1], 0, 0, 0);
-		save = n-1;
-		flag++;
+		HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(handle, 0x7);
+		printf("ÇëÑ¡ÔñÒôÀÖ->");
+		scanf("%d", &n);
+		if (n > sum)
+		{
+			HANDLE ihon = GetStdHandle(STD_OUTPUT_HANDLE);
+			SetConsoleTextAttribute(ihon, 0xc);
+			printf("Ñ¡Ôñ¸èÇú³¬³ö·¶Î§£¡\n");
+		}
+		else
+		{
+			if (flag == 0)
+			{
+				mciSendStringA(arr[n - 1], 0, 0, 0);
+				save = n - 1;
+				flag++;
+			}
+			else
+			{
+				mciSendStringA(arry[save], 0, 0, 0);
+				mciSendStringA(arr[n - 1], 0, 0, 0);
+				save = n - 1;
+			}
+			break;
+		}
+		
 	}
-	else
-	{
-		mciSendStringA(arry[save], 0, 0, 0);
-		mciSendStringA(arr[n-1], 0, 0, 0);
-		save = n-1;
-	}
+	
 }
 
 void printfthink()
